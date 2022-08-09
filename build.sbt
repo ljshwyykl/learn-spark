@@ -1,12 +1,13 @@
 
 ThisBuild / version := "0.1.0"
-ThisBuild / scalaVersion := "2.13.8"
+ThisBuild / scalaVersion := "2.12.14"
 
 
 val scalaTest = "org.scalatest" %% "scalatest" % "3.2.7"
 
 val sparkCore = "org.apache.spark" %% "spark-core" % "3.3.0"
 val sparkSql = "org.apache.spark" %% "spark-sql" % "3.3.0"
+val sparkStreaming = "org.apache.spark" %% "spark-streaming" % "3.3.0"
 
 
 lazy val spark01 = (project in file("spark01"))
@@ -32,9 +33,17 @@ lazy val log = (project in file("log4j"))
 lazy val spark02 = (project in file("spark02"))
   .settings(
     name := "spark02",
-    libraryDependencies ++= Seq(sparkCore, sparkSql),
+    libraryDependencies ++= Seq(sparkCore, sparkSql,sparkStreaming),
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
     libraryDependencies += "mysql" % "mysql-connector-java" % "8.0.29",
 
+    libraryDependencies += scalaTest % Test,
+  )
+
+lazy val bitmap = (project in file("bitmap"))
+  .settings(
+    name := "bitmap",
+    // https://mvnrepository.com/artifact/org.roaringbitmap/RoaringBitmap
+    libraryDependencies += "org.roaringbitmap" % "RoaringBitmap" % "0.9.30",
     libraryDependencies += scalaTest % Test,
   )
